@@ -1,7 +1,6 @@
 <div class="FormExit col-md-12">
  <footer id="footer" class="footer"><!--Footer-->
   <div class="footer-bottom">
-
   </div>
 </footer><!--/Footer-->
 </div>

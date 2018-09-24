@@ -1,3 +1,4 @@
+<?php require_once('server/log.php'); ?>
 <!doctype html>
 <html lang="en">
 <head>

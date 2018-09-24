@@ -1,4 +1,6 @@
- @media (max-width: 1250px) {
+ @import url('register.css');
+
+@media (max-width: 1250px) {
 	.settings{
 		margin-top: 50px;
 		left: 60%;
@@ -7,8 +9,6 @@
 	body #info{
 		margin-top: 75px
 	}
-
-
 }
 @media (min-width: 1120px) {
 	.settings{
@@ -17,16 +17,13 @@
 	body #info{
 		margin-top: 50px
 	}
-
-
 }
 @media (max-width: 870px) {
 
- html body .TextUserMass{
+	html body .TextUserMass{
 		margin-left: 25%;
 	}
 }
-
 @media (max-width: 610px) {
 	.settings{
 		margin-top: 50px;
@@ -36,12 +33,10 @@
 	body	.ImgUserMess{
 		max-width: 80px;
 	}
-	 html body .TextUserMass{
+	html body .TextUserMass{
 		margin-left: 27%;
 	}
 }
-
-
 @media (max-width: 500px) {
 	.settings{
 		margin-top: 80px;
@@ -58,10 +53,10 @@
 		margin-top: 70px;
 		
 	}
- body	.ImgUserMess{
+	body	.ImgUserMess{
 		max-width: 70px;
 	}
-	 html body .TextUserMass{
+	html body .TextUserMass{
 		margin-left: 32%;
 	}
 }
@@ -71,7 +66,7 @@
 		width: 92%;
 		left:5%;
 	}
-body .heightMess{
+	body .heightMess{
 		margin-top: 80px;
 	}
 	html body .TextUserMass{
@@ -79,11 +74,9 @@ body .heightMess{
 		font-size: 12px;
 	}
 	body .dateTimeMess{
-	font-size: 8px;
+		font-size: 8px;
+	}
 }
-}
-
-
 
 
 body{
@@ -120,9 +113,7 @@ body .noneclick {
 	min-height: 1500px;
 	color:black;
 }
-form .NowyouNeed{
-	color: #35EA38;
-}
+
 fieldset{
 	position: fixed;
 	left: 70%;
@@ -150,14 +141,14 @@ html body .ChangePicture{
 	color: white;
 }
 body .reGistr{
-  color: red;
+	color: red;
 }
 .figure{
 	margin-bottom: 0;
 }
 
 body .massegeUser{
-    display: block;	
+	display: block;	
 	margin-top: 5px;
 	border-top: 1px solid white;
 	max-width: 76%;
@@ -180,10 +171,9 @@ body .TextUserMass{
 	margin-top: -20px;
 	margin-left: 15%;
 	width: 90%;
-	 word-break: break-all;
+	word-break: break-all;
 }
 
- body .settings{
- 	z-index: 10;
- }
- 
+body .settings{
+	z-index: 10;
+}
