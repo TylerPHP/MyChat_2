@@ -1,73 +1,91 @@
 <?php 
 require_once 'log.php';
-
-//какой метод отправки данных был использован на страеице
-if($_SERVER['REQUEST_METHOD']  == 'POST')
-{
-  $data = $_POST;
-}
-
 /*==========ПРОВЕРКА ВВЕДЕНЫХ ДАННЫХ=========*/
-//вывод ошибок
-$errors = ['Введено верно', '  <strong>ошибка !</strong>пустая строка', '  <strong>ошибка !</strong>не меньше 6 символов',
- '  <strong>ошибка !</strong>не больше 25 символов', '  <strong>ошибка !</strong>логин может состоять из латинских букв и цифр'];
-$Error__1 = '';
-
-if(isset($_POST['click']) )
+//массив ошибок 
+$er = '<strong>ошибка !</strong>';
+$errors = ['<div class="alert alert-success" role="alert">Введено верно </div>', "$er пустая строка", "$er не меньше 7 символов",
+ "$er не больше 30 символов", "$er латинские буквы или цифры", "$er e-mail введён некорректно", "$er пароли не совпадают"];
+ //значение по умолчанию
+ $Error__1 = '';
+ $Error__2 = '';
+ $Error__3 = '';
+ $Error__4 = '';
+ //----------------проверка логина после отправки
+if(isset($_POST['click']) and $_SERVER['REQUEST_METHOD']  == 'POST')
 {
-  //----------------проверка логина
-$Error_1 = [];
-$Error_1[] = trim($data['login']) !=='' ? false : $errors['1'];//проверка пустой строки
-$Error_1[] = iconv_strlen($data['login']) >= '6' ? false : $errors['2'];
-$Error_1[] = iconv_strlen($data['login']) <= '25' ? false : $errors['3'];
-$Error_1[] = ctype_alnum($data['login']) ? false : $errors['4'];
-$result = mysqli_query($connect, "SELECT `login`, `email` FROM `users`");
-$Error_1[] = false;
 
-foreach($Error_1 as $error){
-  if($error){
-  $Error__1 = $error;
+function method( $x){
+foreach($x as $y){
+  if($y){
+ return  $y;
   break;
-}else{
-  $Error__1 = '';
+}}
+	
 }
-}
-}
+
+
+$data = $_POST;
+$data['login'] = $data['login'] ?? '';
+$data['login'] = trim($data['login']); 
+$Error_1 = [];
+$Error_1[] = $data['login'] !=='' ? false : $errors['1'];//проверка пустой строки
+$Error_1[] = iconv_strlen($data['login']) >= '6' ? false : $errors['2'];
+$Error_1[] = iconv_strlen($data['login']) <= '30' ? false : $errors['3'];
+$Error_1[] = ctype_alnum($data['login']) ? false : $errors['4'];
+// $result = mysqli_query($connect, "SELECT `login`, `email` FROM `users`");
+// $Error_1[] = false;
+
+// foreach($Error_1 as $error){
+//   if($error){
+//   $Error__1 = $error;
+//   break;
+// }else{
+//   $Error__1 = '';
+// }}
+$Error__1 = method($Error_1);
+
+
+
+
 //-------------------------------------
 //------------------проверка почты
+$data['email'] = $data['email'] ?? '';
+$data['email'] = trim($data['email']); 
+$Error_2 = [];
+$Error_2[] = $data['email'] !=='' ? false : $errors['1'];
+$Error_2[] = filter_var($data['email'], FILTER_VALIDATE_EMAIL) ? false :  $errors['5'];
+foreach($Error_2 as $error){
+  if($error){
+  $Error__2 = $error;
+  break;
+}else{
+  $Error__2 = '';
+}}
+//--------------------------------------
+//-------------------проверка пароля
+$data['password'] = $data['password'] ?? '';
+$data['password'] = trim($data['password']); 
+$Error_3 = [];
+$Error_3[] = trim($data['password']) !=='' ? false : $errors['1'];
+$Error_3[] = iconv_strlen($data['password']) > '6' ? false : $errors['2'];
+$Error_3[] = iconv_strlen($data['password']) < '30' ? false : $errors['3'];
+$Error_3[] = ctype_alnum($data['password']) ? false : $errors['4'];
+foreach($Error_3 as $error){
+  if($error){
+  $Error__3 = $error;
+  break;
+}else{
+  $Error__3 = '';
+}}
+//-----------------------------------
+//-------------------проверка второго пароля
+$data['password_2'] = $data['password_2'] ?? '';
+$data['password_2'] = trim($data['password_2']); 
+$Error__4 = $data['password'] === $data['password_2'] ? '' : $errors['6'];
+}
 
 
 
-
-
-
-
-
-//   if( trim($data['Login']) !=='' and iconv_strlen($data['Login']) >= 6 and iconv_strlen($data['Login']) <= 25 and ctype_alnum($data['Login']))
-//   {
-//     $resultEnter[] = '1';
-//     $errors[] = 'ок';
-//     $EnterError[] = '<div class="alert alert-success" role="alert">
-//     <strong></strong>'.$errors[0].'</div>';
-
-//   }else{
-
-//     $errors[] = 'no correct login!';
-//     $EnterError[] = '<div class="alert alert-danger" role="alert">
-//     <strong>error!</strong>'.$errors[0].'</div>';
-//   }
-
-//   if( trim($data['email']) !=='' and filter_var($data['email'], FILTER_VALIDATE_EMAIL))
-//   {   
-//    $resultEnter[] = '1';
-//    $errors[] = 'ок';
-//    $EnterError[] = '<div class="alert alert-success" role="alert">
-//    <strong></strong>'.$errors[1].'</div>';
-//  }else{
-//    $errors[] = 'no correct email!';
-//    $EnterError[] = '<div class="alert alert-danger" role="alert">
-//    <strong>error!</strong>'.$errors[1].'</div>';
-//  }
 
 //  if(trim($data['password']) !=='' and iconv_strlen($data['password']) > 7 and iconv_strlen($data['password']) < 18 )
 //  {

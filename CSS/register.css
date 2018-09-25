@@ -1,32 +1,10 @@
-/*body form .col-md-6{
-	margin:0;
-	padding:0;
-	max-width: 900px;
-}
-body form .col-md-6 input{
-	max-width: 400px;
-}
-body form  .alert-danger{
-	white-space: nowrap;
-	max-width: 460px;
-}
-body form  .field-label-responsive{
-	max-width: 100px;
-}
-body form .col-md-6 {
-	max-width: 450px;
-}*/
-
-
 .form-signin {
   width: 100%;
   max-width: 330px;
-  padding: 15px;
   margin: 0 auto;
+  height: auto;
 }
-.form-signin .checkbox {
-  font-weight: 400;
-}
+
 .form-signin .form-control {
   position: relative;
   box-sizing: border-box;
@@ -37,13 +15,14 @@ body form .col-md-6 {
 .form-signin .form-control:focus {
   z-index: 2;
 }
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+.form-signin .form-control{
+  margin-bottom:20px;
 }
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+.bg-secondary .text-danger{
+margin-top: -20px;
+height: 20px;
+}
+
+.bg-secondary{
+  overflow:hidden;
 }

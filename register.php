@@ -1,21 +1,26 @@
 <?php  require_once('header.php'); 
 require_once('server/register_serv.php');
 ?>
-<div class="p-3 mb-2 bg-secondary text-white">
-<div class="text-center">
- <form class="form-signin" role="form" method="POST" action="register.php">
-  <div class="alert alert-danger" role="alert">
-          <?=$Error__1;?></div>
-      <h1 class="h3 mb-3 font-weight-normal">Регистрация нового пользоателя</h1>
-      <input type="text" name="login" class="form-control" placeholder="Введите логин" value="<?=$data['login'] ?? '';?>" required autofocus>
-        
 
-      <input type="text"  class="form-control" placeholder="Password" required>
-    
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Регистрация</button>
-    </form>
+<div class="text-center p-4 border border-white bg-secondary">
+  <h1 class="h4 mb-4 ">Регистрация</h1>
+  <div class="text-danger"><?=$Error__1;?></div>
+  <form class="form-signin" role="form" method="POST" action="register.php">
+    <input type="text" name="login" class="form-control" placeholder="Введите логин" value="<?=$data['login'] ?? '';?>" required autofocus>
+    <div class="text-danger"><?=$Error__2;?></div>
+    <input type="text" name="email" class="form-control" placeholder="Введите почту" value="<?=$data['email'] ?? '';?>" required> 
+    <div class="text-danger"><?=$Error__3;?></div>
+    <input type="password" name="password" class="form-control" placeholder="Введите пароль" value="<?=$data['password'] ?? '';?>" required>
+    <div class="text-danger"><?=$Error__4;?></div>
+    <input type="password" name="password_2" class="form-control" placeholder="Подтвердите пароль" value="<?=$data['password_2'] ?? '';?>" required>
+    <button class="btn btn-lg btn-primary btn-block" name="click" type="submit">Регистрация</button>
+  </form>
 </div>
-</div>
+
+
+
+
+
 
 
 
