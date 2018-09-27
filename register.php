@@ -16,7 +16,69 @@ require_once('server/register_serv.php');
     <button class="btn btn-lg btn-primary btn-block" name="click" type="submit">Регистрация</button>
   </form>
 </div>
+<script>
+  //введенные значения из input
+  var email = new Object();
+  email.select = document.querySelector('input[name=email]');
+  email.name = 'email';
 
+  var login = new Object();
+  login.select = document.querySelector('input[name=login]');
+  login.name = 'login';
+
+  // var email = document.querySelector('input[name=email]');
+  // var login = document.querySelector('input[name=login]');
+//-------------------------------login---------------
+function formInput(input){
+ input.select.onblur = function(){
+var xhr = new XMLHttpRequest();
+xhr.open("POST","server/register_serv.php",true);
+xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xhr.onreadystatechange = function () {
+if(xhr.readyState==4 && xhr.status==200){
+  if(xhr.responseText == '1'){
+    document.querySelector('.text-danger').innerHTML = "<strong>ошибка !</strong> логин или почта уже заняты";
+  }else{
+    document.querySelector('.text-danger').innerHTML = "";
+  } 
+}}
+var vars = input.name+"_xhr="+input.select.value;
+xhr.send(vars);
+}}
+formInput(login);
+formInput(email);
+
+//   login.onblur = function(){
+//     var xhr = new XMLHttpRequest();
+//   xhr.open("POST","server/register_serv.php",true);
+//   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//   xhr.onreadystatechange = function () {
+// if(xhr.readyState==4 && xhr.status==200){
+//   if(xhr.responseText == '1'){
+//     document.querySelector('.text-danger').innerHTML = "<strong>ошибка !</strong> логин или почта уже заняты";
+//   }
+//  }
+// }
+// var vars = "login_xhr="+login.value;
+// xhr.send(vars);
+//   }
+// //----------------------------------------------
+// //---------------------------email-------------------
+//  email.onblur = function(){
+//   var xhr = new XMLHttpRequest();
+//   xhr.open("POST","server/register_serv.php",true);
+//   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//   xhr.onreadystatechange = function () {
+// if(xhr.readyState==4 && xhr.status==200){
+//   var return_data = xhr.responseText;
+
+//  }
+// }
+// var vars = "email_xhr="+email.value;
+// xhr.send(vars);
+// }
+
+</script>
 
 
 

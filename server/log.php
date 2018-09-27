@@ -1,16 +1,15 @@
 <?php
-$connect = mysqli_connect('localhost', 'root', '', 'Chat');
+$connect = new PDO('mysql:host=localhost;dbname=ChatTwo', 'root', '');
 
-if( $connect == false)
-{
-	echo "ошибка проверки данных------!";
-	echo mysqli_connect_error();
-}
+$host = 'localhost';
+$database = 'ChatTwo';
+$user = 'root';
+$pass = '';
 
-$result = mysqli_query($connect, "SELECT * FROM `users`");
- if( $result == false)
-{
-	echo "ошибка проверки данных------!";
-	echo mysqli_connect_error();
-}
+  $dsn = "mysql:host=$host;dbname=$database;";
+  // $options = array(
+  //     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+  //     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+  // );
+  $pdo = new PDO($dsn, $user, $pass);
 ?>

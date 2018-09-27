@@ -4,25 +4,36 @@ require_once 'log.php';
 //массив ошибок 
 $er = '<strong>ошибка !</strong>';
 $errors = ['<div class="alert alert-success" role="alert">Введено верно </div>', "$er пустая строка", "$er не меньше 7 символов",
- "$er не больше 30 символов", "$er латинские буквы или цифры", "$er e-mail введён некорректно", "$er пароли не совпадают"];
+ "$er не больше 30 символов", "$er латинские буквы или цифры", "$er e-mail введён некорректно", "$er пароли не совпадают", "такой логин занят"];
  //значение по умолчанию
  $Error__1 = '';
  $Error__2 = '';
  $Error__3 = '';
  $Error__4 = '';
+//----------
+
+$login_xhr = isset($_POST['login_xhr']) ? $_POST['login_xhr'] : '';
+$email_xhr = isset($_POST['email_xhr']) ? $_POST['email_xhr'] : '';
+ 
+if($login_xhr or $email_xhr){
+$result = $pdo->prepare("SELECT `login`, `email` FROM `users` WHERE `login` = :login OR `email` = :email ");
+ $result->execute([':login' => $login_xhr, ':email' => $email_xhr]);
+if($result->fetchColumn()){
+	echo '1';
+}else{
+	echo '0';
+}
+}
+
  //----------------проверка логина после отправки
 if(isset($_POST['click']) and $_SERVER['REQUEST_METHOD']  == 'POST')
-{
-
+{ 
+//функция перебора ошибок
 function method( $x){
 foreach($x as $y){
   if($y){
  return  $y;
-  break;
-}}
-	
-}
-
+  break;}}}
 
 $data = $_POST;
 $data['login'] = $data['login'] ?? '';
@@ -32,21 +43,7 @@ $Error_1[] = $data['login'] !=='' ? false : $errors['1'];//проверка пу
 $Error_1[] = iconv_strlen($data['login']) >= '6' ? false : $errors['2'];
 $Error_1[] = iconv_strlen($data['login']) <= '30' ? false : $errors['3'];
 $Error_1[] = ctype_alnum($data['login']) ? false : $errors['4'];
-// $result = mysqli_query($connect, "SELECT `login`, `email` FROM `users`");
-// $Error_1[] = false;
-
-// foreach($Error_1 as $error){
-//   if($error){
-//   $Error__1 = $error;
-//   break;
-// }else{
-//   $Error__1 = '';
-// }}
 $Error__1 = method($Error_1);
-
-
-
-
 //-------------------------------------
 //------------------проверка почты
 $data['email'] = $data['email'] ?? '';
@@ -54,13 +51,7 @@ $data['email'] = trim($data['email']);
 $Error_2 = [];
 $Error_2[] = $data['email'] !=='' ? false : $errors['1'];
 $Error_2[] = filter_var($data['email'], FILTER_VALIDATE_EMAIL) ? false :  $errors['5'];
-foreach($Error_2 as $error){
-  if($error){
-  $Error__2 = $error;
-  break;
-}else{
-  $Error__2 = '';
-}}
+$Error__2 = method($Error_2);
 //--------------------------------------
 //-------------------проверка пароля
 $data['password'] = $data['password'] ?? '';
@@ -70,13 +61,7 @@ $Error_3[] = trim($data['password']) !=='' ? false : $errors['1'];
 $Error_3[] = iconv_strlen($data['password']) > '6' ? false : $errors['2'];
 $Error_3[] = iconv_strlen($data['password']) < '30' ? false : $errors['3'];
 $Error_3[] = ctype_alnum($data['password']) ? false : $errors['4'];
-foreach($Error_3 as $error){
-  if($error){
-  $Error__3 = $error;
-  break;
-}else{
-  $Error__3 = '';
-}}
+$Error__3 = method($Error_3);
 //-----------------------------------
 //-------------------проверка второго пароля
 $data['password_2'] = $data['password_2'] ?? '';
@@ -87,27 +72,6 @@ $Error__4 = $data['password'] === $data['password_2'] ? '' : $errors['6'];
 
 
 
-//  if(trim($data['password']) !=='' and iconv_strlen($data['password']) > 7 and iconv_strlen($data['password']) < 18 )
-//  {
-//   $resultEnter[] = '1';
-//   $errors[] = 'ок';
-//   $EnterError[] = '<div class="alert alert-success" role="alert">
-//   <strong></strong>'.$errors[2].'</div>';
-
-// }else{
-//   $errors[] = 'is incorrect!';
-//   $EnterError[] = '<div class="alert alert-danger" role="alert">
-//   <strong>error!</strong>'.$errors[2].'</div>';
-// }
-
-// if($data['password-confirmation'] !== $data['password'])
-// {
-//  $errors[] = 'Passwords do not match!';
-//  $EnterError[3] = '<div class="alert alert-danger" role="alert">
-//  <strong>error!</strong>'.$errors[3].'</div>';
-// }else{
-//  $resultEnter[] = '1';
-// }
 
 // }
 // /*---------------------------------------------------------*/
