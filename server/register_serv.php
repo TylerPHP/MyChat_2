@@ -12,62 +12,84 @@ $errors = ['<div class="alert alert-success" role="alert">Введено вер�
  $Error__4 = '';
 //----------
 
-$login_xhr = isset($_POST['login_xhr']) ? $_POST['login_xhr'] : '';
-$email_xhr = isset($_POST['email_xhr']) ? $_POST['email_xhr'] : '';
- 
-if($login_xhr or $email_xhr){
+$login_xhr = $_POST['login'] ?? false ;
+$email_xhr = $_POST['email'] ?? false;
+$epp = isset($login_xhr) ? $er.'этот логин занят' : false;
+$epp_2 =  isset($login_xhr) ? $er.'этот логин занят' : false;
+
+if(isset($epp)){
+   $enter = $epp;
+}
+
+if(isset($epp_2)){
+   $enter = $epp_2;
+}
+
+
+if($login_xhr or  $email_xhr){
 $result = $pdo->prepare("SELECT `login`, `email` FROM `users` WHERE `login` = :login OR `email` = :email ");
  $result->execute([':login' => $login_xhr, ':email' => $email_xhr]);
 if($result->fetchColumn()){
-	echo '1';
+	echo $enter;
 }else{
 	echo '0';
 }
+
 }
 
  //----------------проверка логина после отправки
-if(isset($_POST['click']) and $_SERVER['REQUEST_METHOD']  == 'POST')
-{ 
+// if(isset($_POST['click']) and $_SERVER['REQUEST_METHOD']  == 'POST')
+// { 
 //функция перебора ошибок
-function method( $x){
-foreach($x as $y){
-  if($y){
- return  $y;
-  break;}}}
-
-$data = $_POST;
-$data['login'] = $data['login'] ?? '';
-$data['login'] = trim($data['login']); 
-$Error_1 = [];
-$Error_1[] = $data['login'] !=='' ? false : $errors['1'];//проверка пустой строки
-$Error_1[] = iconv_strlen($data['login']) >= '6' ? false : $errors['2'];
-$Error_1[] = iconv_strlen($data['login']) <= '30' ? false : $errors['3'];
-$Error_1[] = ctype_alnum($data['login']) ? false : $errors['4'];
-$Error__1 = method($Error_1);
-//-------------------------------------
-//------------------проверка почты
-$data['email'] = $data['email'] ?? '';
-$data['email'] = trim($data['email']); 
-$Error_2 = [];
-$Error_2[] = $data['email'] !=='' ? false : $errors['1'];
-$Error_2[] = filter_var($data['email'], FILTER_VALIDATE_EMAIL) ? false :  $errors['5'];
-$Error__2 = method($Error_2);
-//--------------------------------------
-//-------------------проверка пароля
-$data['password'] = $data['password'] ?? '';
-$data['password'] = trim($data['password']); 
-$Error_3 = [];
-$Error_3[] = trim($data['password']) !=='' ? false : $errors['1'];
-$Error_3[] = iconv_strlen($data['password']) > '6' ? false : $errors['2'];
-$Error_3[] = iconv_strlen($data['password']) < '30' ? false : $errors['3'];
-$Error_3[] = ctype_alnum($data['password']) ? false : $errors['4'];
-$Error__3 = method($Error_3);
-//-----------------------------------
-//-------------------проверка второго пароля
-$data['password_2'] = $data['password_2'] ?? '';
-$data['password_2'] = trim($data['password_2']); 
-$Error__4 = $data['password'] === $data['password_2'] ? '' : $errors['6'];
-}
+// function method( $x){
+// foreach($x as $y){
+//   if($y){
+//  return  $y;
+//   break;}}}
+// $data = $_POST;
+// $data['login'] = $data['login'] ?? false;
+// if($data['login'] ){
+// $data['login'] = trim($data['login']); 
+// $Error_1 = [];
+// $Error_1[] = $data['login'] !=='' ? false : $errors['1'];//проверка пустой строки
+// $Error_1[] = iconv_strlen($data['login']) >= '6' ? false : $errors['2'];
+// $Error_1[] = iconv_strlen($data['login']) <= '30' ? false : $errors['3'];
+// $Error_1[] = ctype_alnum($data['login']) ? false : $errors['4'];
+// $Error__1 = method($Error_1);
+// echo $Error__1;
+// }
+// //-------------------------------------
+// //------------------проверка почты
+// $data['email'] = $data['email'] ?? false;
+// if($data['email']){
+// $data['email'] = trim($data['email']); 
+// $Error_2 = [];
+// $Error_2[] = $data['email'] !=='' ? false : $errors['1'];
+// $Error_2[] = filter_var($data['email'], FILTER_VALIDATE_EMAIL) ? false :  $errors['5'];
+// $Error__2 = method($Error_2);
+// echo $Error__2;
+// }
+// //--------------------------------------
+// //-------------------проверка пароля
+// $data['password'] = $data['password'] ?? false;
+// if($data['password']){
+// $data['password'] = trim($data['password']); 
+// $Error_3 = [];
+// $Error_3[] = trim($data['password']) !=='' ? false : $errors['1'];
+// $Error_3[] = iconv_strlen($data['password']) > '6' ? false : $errors['2'];
+// $Error_3[] = iconv_strlen($data['password']) < '30' ? false : $errors['3'];
+// $Error_3[] = ctype_alnum($data['password']) ? false : $errors['4'];
+// $Error__3 = method($Error_3);
+// echo $Error__3;
+// }
+// //-----------------------------------
+// //-------------------проверка второго пароля
+// $data['password_2'] = $data['password_2'] ?? false;
+// if($data['password_2']){
+// $data['password_2'] = trim($data['password_2']); 
+// $Error__4 = $data['password'] === $data['password_2'] ? '' : $errors['6'];
+// }
+// // }
 
 
 

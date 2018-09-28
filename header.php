@@ -2,16 +2,11 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Boot strap  CSS  -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="CSS/style.css">
-  <script src="JS/jquery-3.2.1.js"></script>
-  <script src="JS/content.js"></script>
-  <noscript><span>------Enable javascript for future work!!!!!-------</span></noscript>
+  <noscript><span>------На этом сайте используется Javascript , Включите его опожалуйсто!!!!!-------</span></noscript>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
