@@ -1,6 +1,4 @@
 <?php
-$connect = new PDO('mysql:host=localhost;dbname=ChatTwo', 'root', '');
-
 $host = 'localhost';
 $database = 'ChatTwo';
 $user = 'root';
@@ -12,4 +10,8 @@ $pass = '';
   //     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
   // );
   $pdo = new PDO($dsn, $user, $pass);
+
+  class User{
+  	
+  }
 ?>
