@@ -1,7 +1,7 @@
 <?php
-
+namespace Model;		
 /*класс проверки формы */
-class User_check{
+class User{
 	public $login;
 	public $email;
 	public $time;
@@ -17,10 +17,11 @@ class User_check{
   //     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
   //     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
   // );
-		$pdo = new PDO($dsn, $user, $pass);
+		$pdo = new \PDO($dsn, $user, $pass);
 		$this->pdo = $pdo;
 	}
 	public function login(string $login){
+		$pdo = $this->pdo;
 		$login = $login ?? false;
 		$login = trim($login); 
 		$error = [];
