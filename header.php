@@ -1,4 +1,4 @@
-<?php require_once('server/model/User.php'); ?>
+<?php require_once('App/model/User.php'); ?>
 <!doctype html>
 <html lang="en">
 <head>

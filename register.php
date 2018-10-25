@@ -2,7 +2,7 @@
 <div class="text-center p-4 border border-white bg-secondary">
   <h1 class="h4 mb-4 ">Регистрация</h1>
   <div class="text-danger login_error"></div>
-  <form class="form-signin" role="form" method="POST" action="server/controller/register.php">
+  <form class="form-signin" role="form" method="POST" action="App/controller/Register.php">
     <input type="text" name="login" class="form-control " placeholder="Введите логин" value="<?=$_POST['login'] ?? '';?>" required autofocus>
     <div class="text-danger email_error"></div>
     <input type="text" name="email" class="form-control " placeholder="Введите почту" value="<?=$_POST['email'] ?? '';?>" required> 
@@ -20,7 +20,8 @@ $('button[name=click]').on('click', function(){
   return false;
 }).on('click', function(){ 
 var form = $(".form-signin").serialize();
-$.post("server/controller/register.php",form, function( data ){
+$.post("App/controller/Register.php",form, function( data ){
+  alert(data);
 $(".login_error").html(data.login);
 $(".email_error").html(data.email);
 $(".password_error").html(data.password);

@@ -1,33 +1,37 @@
 <?php 
 namespace controller;
-// require_once '../model/User.php';
-use  Model\User;
-$class = new User;
-$us = $class->login('lolooofgfghfjdhgjfhjfhjghjfghjcghjcgjc');
-echo $us;
-
-
-
-
-
-
-spl_autoload_register(function($class) {
-    
-        require_once('../model'.str_replace('\\', '/', $class).'.php');
-    
+use  model\User;
+//автоматическая загрузка классов
+spl_autoload_register(function($class) {   
+        require_once('../'.str_replace('\\', '/', $class).'.php'); 
 });
 
+
+class Form{
+protected $form = array();
+protected $error = array();
+public function __construct(){
+	$form = $_POST;
+$class = new User();
+$x = $class->login();
+$this->error['login'] = $this->errors(2);
+}
+
+public function errors( $number){
 $er = '<strong>ошибка !</strong>';
 $errors = ['<div class="alert alert-success" role="alert">Введено верно </div>', "$er пустая строка", "$er не меньше 7 символов",
  "$er не больше 30 символов", "$er латинские буквы или цифры", "$er e-mail введён некорректно", "$er пароли не совпадают", "$er такой логин занят", "$er такая почта занята"];
-
-class Form{
-
-
-
+ $show = $errors[$number];
+ return $show;
 }
-
-
+public function send(){
+	 // echo json_encode(array($this->error));
+	echo $this->error;
+}}
+ // if($_SERVER['REQUEST_METHOD'] == 'POST'){	
+$form = new Form;
+ $form->send();
+ // }
 
 
 
