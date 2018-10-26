@@ -1,4 +1,5 @@
 <?php  require_once('header.php');?>
+
 <div class="text-center p-4 border border-white bg-secondary">
   <h1 class="h4 mb-4 ">Регистрация</h1>
   <div class="text-danger login_error"></div>
@@ -21,7 +22,7 @@ $('button[name=click]').on('click', function(){
 }).on('click', function(){ 
 var form = $(".form-signin").serialize();
 $.post("App/controller/Register.php",form, function( data ){
-  alert(data);
+ 
 $(".login_error").html(data.login);
 $(".email_error").html(data.email);
 $(".password_error").html(data.password);

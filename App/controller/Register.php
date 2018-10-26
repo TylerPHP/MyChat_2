@@ -10,28 +10,40 @@ spl_autoload_register(function($class) {
 class Form{
 protected $form = array();
 protected $error = array();
+protected $user;//объект модели
 public function __construct(){
-	$form = $_POST;
-$class = new User();
-$x = $class->login();
-$this->error['login'] = $this->errors(2);
+	if($_SERVER['REQUEST_METHOD'] == 'POST'){	
+$this->user = new User($_POST);
+ }
 }
-
 public function errors( $number){
 $er = '<strong>ошибка !</strong>';
 $errors = ['<div class="alert alert-success" role="alert">Введено верно </div>', "$er пустая строка", "$er не меньше 7 символов",
  "$er не больше 30 символов", "$er латинские буквы или цифры", "$er e-mail введён некорректно", "$er пароли не совпадают", "$er такой логин занят", "$er такая почта занята"];
+ if($number){
  $show = $errors[$number];
+}else{
+ $show = '';	
+}
  return $show;
 }
 public function send(){
-	 // echo json_encode(array($this->error));
-	echo $this->error;
+	$user = $this->user;
+$log = $user->login();
+$em = $user->email();
+$pass = $user->password();
+$this->error['login'] = $this->errors($log);
+$this->error['email'] = $this->errors($em);
+// $this->error['password'] = $this->errors($pass);
+	$login = $this->error['login'];
+	$email = $this->error['email'];
+	$password = $this->error['password'];
+	 echo json_encode(array("login"=>'$login', "email"=>'$email', "password"=>'$password', "password_2"=>'$Error__4'));
 }}
- // if($_SERVER['REQUEST_METHOD'] == 'POST'){	
 $form = new Form;
- $form->send();
- // }
+$form->send();
+ 
+ 
 
 
 
@@ -44,29 +56,6 @@ $form = new Form;
 
 
 
-// //-------------------------------------
-// //------------------проверка почты
-// $data['email'] = $data['email'] ?? false;
-// $data['email'] = trim($data['email']); 
-// $Error_2 = [];
-// $Error_2[] = $data['email'] !=='' ? false : $errors['1'];
-// $Error_2[] = filter_var($data['email'], FILTER_VALIDATE_EMAIL) ? false : $errors['5'];
-// //---------проверка наличия почты в бд---------
-// // $result = $pdo->prepare("SELECT `email` FROM `users` WHERE `email` = :email");
-// // $result->execute([':email' => $data['email']]);
-// // $Error_2[] = $result->fetchColumn() ? $errors['7'] : false ;
-// // $Error__2 = method($Error_2);
-
-// //--------------------------------------
-// //-------------------проверка пароля
-// $data['password'] = $data['password'] ?? false;
-// $data['password'] = trim($data['password']); 
-// $Error_3 = [];
-// $Error_3[] = trim($data['password']) !=='' ? false : $errors['1'];
-// $Error_3[] = iconv_strlen($data['password']) > '6' ? false : $errors['2'];
-// $Error_3[] = iconv_strlen($data['password']) < '30' ? false : $errors['3'];
-// $Error_3[] = ctype_alnum($data['password']) ? false : $errors['4'];
-// // $Error__3 = method($Error_3);
 // //-----------------------------------
 // //-------------------проверка второго пароля
 // $data['password_2'] = $data['password_2'] ?? false;
