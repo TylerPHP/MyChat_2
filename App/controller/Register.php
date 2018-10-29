@@ -1,70 +1,50 @@
 <?php 
 namespace controller;
-use  model\User;
+use model\User;
 //автоматическая загрузка классов
 spl_autoload_register(function($class) {   
         require_once('../'.str_replace('\\', '/', $class).'.php'); 
 });
-
-
+//класс формирования ошибок
 class Form{
-protected $form = array();
+protected $post = array();
 protected $error = array();
-protected $user;//объект модели
+public $user;//объект модели
 public function __construct(){
-	if($_SERVER['REQUEST_METHOD'] == 'POST'){	
-$this->user = new User($_POST);
- }
-}
+	if($_SERVER['REQUEST_METHOD'] == 'POST'){
+$this->post = $_POST;
+$this->user = new User($this->post);
+$this->send();
+}}
 public function errors( $number){
 $er = '<strong>ошибка !</strong>';
-$errors = ['<div class="alert alert-success" role="alert">Введено верно </div>', "$er пустая строка", "$er не меньше 7 символов",
- "$er не больше 30 символов", "$er латинские буквы или цифры", "$er e-mail введён некорректно", "$er пароли не совпадают", "$er такой логин занят", "$er такая почта занята"];
- if($number){
- $show = $errors[$number];
-}else{
- $show = '';	
-}
- return $show;
+$errors = [
+'<div class="alert alert-success" role="alert">Введено верно </div>',
+"$er пустая строка",
+"$er не меньше 7 символов",
+"$er не больше 30 символов",
+"$er латинские буквы или цифры",
+"$er e-mail введён некорректно",
+"$er пароли не совпадают",
+"$er такой логин занят",
+"$er такая почта занята"
+];
+$show = $number ?  $errors[$number] : false;
+return $show;
 }
 public function send(){
-	$user = $this->user;
-$log = $user->login();
-$em = $user->email();
-$pass = $user->password();
-$this->error['login'] = $this->errors($log);
-$this->error['email'] = $this->errors($em);
-// $this->error['password'] = $this->errors($pass);
-	$login = $this->error['login'];
-	$email = $this->error['email'];
-	$password = $this->error['password'];
-	 echo json_encode(array("login"=>'$login', "email"=>'$email', "password"=>'$password', "password_2"=>'$Error__4'));
+$user = $this->user;
+$form_err = [
+"login"=>$this->errors($user->login()), 
+"email"=>$this->errors($user->email()),
+"password"=>$this->errors($user->password()), 
+"password_2"=>$this->errors($user->password_2())
+];
+//отправка массива ошибок
+$ajax = json_encode($form_err);
+if($ajax) echo $ajax;
 }}
 $form = new Form;
-$form->send();
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-// //-----------------------------------
-// //-------------------проверка второго пароля
-// $data['password_2'] = $data['password_2'] ?? false;
-// $data['password_2'] = trim($data['password_2']); 
-// $Error__4 = $data['password'] === $data['password_2'] ? false : $errors['6'];
-// echo json_encode(array("login"=>$Error__1, "email"=>$Error__2, "password"=>$Error__3, "password_2"=>$Error__4)); 
-
-
-
 
 
 

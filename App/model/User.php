@@ -1,17 +1,19 @@
 <?php
 namespace Model;		
 /*класс проверки формы */
-class User{
+class User_add{
+	public $lol = 1;
 	public $login;
 	public $email;
 	public $time;
-	public $password;
+	protected $password;
 	protected $pdo;
+	public $error = array();
 	public $post = array();
-	public function __construct(array $post){
-	$this->PDO_connect();
-	$this->post = $post;
-	}
+	// public function __construct(array $post){
+	// $this->PDO_connect();
+	// $this->post = $post;
+	// }
 public function login(){
 $login = $this->post['login'];
 $login = $login ?? false;
@@ -24,8 +26,10 @@ $error[] = ctype_alnum($login) ? false : '4';
 //-------проверка наличия  логина в бд-------------
 $result = $this->pdo->prepare("SELECT `login` FROM `users` WHERE `login` = :login");
 $result->execute([':login' => $login]);
-$error[] = $result->fetchColumn() ? '6' : false;
+$error[] = $result->fetchColumn() ? '7' : false;
 $error_result = $this->method($error);
+
+$this->login = $error_result;
 //выводит номер ошибки
 return $error_result;
 }
@@ -39,8 +43,10 @@ $error[] = filter_var($email, FILTER_VALIDATE_EMAIL) ? false : '5';
 //---------проверка наличия почты в бд---------
 $result = $this->pdo->prepare("SELECT `email` FROM `users` WHERE `email` = :email");
 $result->execute([':email' => $email]);
-$error[] = $result->fetchColumn() ? '7' : false ;
+$error[] = $result->fetchColumn() ? '8' : false ;
 $error_result = $this->method($error);
+
+$this->error_result = $error_result;
 return $error_result;
 }
 public function password(){
@@ -52,8 +58,16 @@ $error[] = trim($password) !=='' ? false : '1';
 $error[] = iconv_strlen($password) > '6' ? false : '2';
 $error[] = iconv_strlen($password) < '30' ? false : '3';
 $error[] = ctype_alnum($password) ? false : '4';
-$error_result = method($error);	
+$error_result = $this->method($error);
+
 return $error_result;
+}
+public function password_2(){
+$password_2 = $this->post['password_2'];
+$password_2 = $password_2 ?? false;
+$password_2 = trim($password_2); 
+$error = $this->post['password'] === $password_2 ? false : '6';
+return $error;
 }
 //метод перебора массива ошибок
 public function method($error){
@@ -64,7 +78,7 @@ public function method($error){
       	}
       }
 }
-private function PDO_connect(){
+protected function PDO_connect(){
 	$host = 'localhost';
 	$database = 'ChatTwo';
 	$user = 'root';
@@ -77,5 +91,16 @@ private function PDO_connect(){
 	$pdo = new \PDO($dsn, $user, $pass);
 	$this->pdo = $pdo;	
 }
+// public function test(){
+// 	echo $this->lol;
+// }
 }
+//класс добовления зарегестрированного пользователя
+class User extends User_add{
+public function __construct(array $post){
+	$this->PDO_connect();
+	$this->post = $post;	
+}}
+// $new = new User_add(['a'=>'a']);
+// $new->test();
 ?>

@@ -22,7 +22,6 @@ $('button[name=click]').on('click', function(){
 }).on('click', function(){ 
 var form = $(".form-signin").serialize();
 $.post("App/controller/Register.php",form, function( data ){
- 
 $(".login_error").html(data.login);
 $(".email_error").html(data.email);
 $(".password_error").html(data.password);
