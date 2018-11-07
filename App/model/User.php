@@ -1,12 +1,12 @@
 <?php
 namespace Model;		
-/*класс проверки формы */
-class User_add{
-	public $lol = 1;
+//класс проверки формы 
+class User_check{
 	public $login;
 	public $email;
 	public $time;
-	protected $password;
+	public $password;
+	public $password_2;
 	protected $pdo;
 	public $error = array();
 	public $post = array();
@@ -28,10 +28,7 @@ $result = $this->pdo->prepare("SELECT `login` FROM `users` WHERE `login` = :logi
 $result->execute([':login' => $login]);
 $error[] = $result->fetchColumn() ? '7' : false;
 $error_result = $this->method($error);
-
 $this->login = $error_result;
-//выводит номер ошибки
-return $error_result;
 }
 public function email(){
 $email = $this->post['email'];
@@ -45,9 +42,8 @@ $result = $this->pdo->prepare("SELECT `email` FROM `users` WHERE `email` = :emai
 $result->execute([':email' => $email]);
 $error[] = $result->fetchColumn() ? '8' : false ;
 $error_result = $this->method($error);
-
 $this->error_result = $error_result;
-return $error_result;
+$this->email = $error_result;
 }
 public function password(){
 $password = $this->post['password'];
@@ -59,15 +55,14 @@ $error[] = iconv_strlen($password) > '6' ? false : '2';
 $error[] = iconv_strlen($password) < '30' ? false : '3';
 $error[] = ctype_alnum($password) ? false : '4';
 $error_result = $this->method($error);
-
-return $error_result;
+$this->password = $error_result;
 }
 public function password_2(){
 $password_2 = $this->post['password_2'];
 $password_2 = $password_2 ?? false;
 $password_2 = trim($password_2); 
 $error = $this->post['password'] === $password_2 ? false : '6';
-return $error;
+$this->password_2 = $error;
 }
 //метод перебора массива ошибок
 public function method($error){
@@ -75,9 +70,7 @@ public function method($error){
       	if($er){
       		return $er;
       		break;
-      	}
-      }
-}
+      	}}}
 protected function PDO_connect(){
 	$host = 'localhost';
 	$database = 'ChatTwo';
@@ -91,16 +84,27 @@ protected function PDO_connect(){
 	$pdo = new \PDO($dsn, $user, $pass);
 	$this->pdo = $pdo;	
 }
-// public function test(){
-// 	echo $this->lol;
-// }
 }
 //класс добовления зарегестрированного пользователя
-class User extends User_add{
+class User extends User_check{
+	public $add_user;
 public function __construct(array $post){
 	$this->PDO_connect();
-	$this->post = $post;	
-}}
+	$this->post = $post;
+	$this->login();
+	$this->email();
+	$this->password();	
+	$this->password_2();
+	$this->add_chack();
+}
+public function add_chack(){
+    if(!$this->login and !$this->email and !$this->password and !$this->password_2){
+           $this->add_user = '1';
+       }else{
+       	   $this->add_user = '0';
+       }
+}
+}
 // $new = new User_add(['a'=>'a']);
 // $new->test();
 ?>

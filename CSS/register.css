@@ -1,10 +1,15 @@
+input:required:valid {
+  border-color: blue;
+}
+.loader_add{
+background: url(images/loader.gif) no-repeat 58%;
+}
 .form-signin {
   width: 100%;
   max-width: 330px;
   margin: 0 auto;
   height: auto;
 }
-
 .form-signin .form-control {
   position: relative;
   box-sizing: border-box;
@@ -22,7 +27,6 @@
 margin-top: -20px;
 height: 20px;
 }
-
 .bg-secondary{
   overflow:hidden;
 }
