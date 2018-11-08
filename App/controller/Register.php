@@ -41,29 +41,21 @@ $form_err = [
 "password_2"=>$this->errors($user->password_2)
 ];
 //отправка массива ошибок
-if($user->add_user == '1'){
+if($user->user_add == '1'){
 echo json_encode(array('user' => 'ok'));
 }else{
 $ajax = json_encode($form_err);
 if($ajax) echo $ajax;
- }}}
+ }
+}}
 $form = new Form;
 
 
 
-// }
-// /*---------------------------------------------------------*/
-// /*ip user*/
-// $client  = @$_SERVER['HTTP_CLIENT_IP'];
-// $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
-// $remote  = @$_SERVER['REMOTE_ADDR'];
-// if(filter_var($client, FILTER_VALIDATE_IP)) $ip = $client;
-// elseif(filter_var($forward, FILTER_VALIDATE_IP)) $ip = $forward;
-// else $ip = $remote;
+
 // /*----------*/
 // /*-----time in base-----*/
-// time() + (7 * 24 * 60 * 60);
-// $dataTime = date('l jS \of F Y h:i:s A');
+
 // /*--------------------*/
 // /*----add in base------*/
 // $result = mysqli_query($connect, "SELECT * FROM `users`");

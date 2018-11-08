@@ -4,7 +4,6 @@ namespace Model;
 class User_check{
 	public $login;
 	public $email;
-	public $time;
 	public $password;
 	public $password_2;
 	protected $pdo;
@@ -87,24 +86,67 @@ protected function PDO_connect(){
 }
 //класс добовления зарегестрированного пользователя
 class User extends User_check{
-	public $add_user;
-public function __construct(array $post){
+	public $add_chack;
+	public $time;
+	public $user_add;
+    public function __construct(array $post){
 	$this->PDO_connect();
 	$this->post = $post;
 	$this->login();
 	$this->email();
 	$this->password();	
 	$this->password_2();
-	$this->add_chack();
+	$this->add_user();
 }
+//проверяет правильно ли пользователь заполнил форму
 public function add_chack(){
     if(!$this->login and !$this->email and !$this->password and !$this->password_2){
-           $this->add_user = '1';
+           return true;
        }else{
-       	   $this->add_user = '0';
+       	   return false;
        }
 }
+//добовляет пользователя в базу
+public function add_user(){
+	$time = $this->time_add();
+	$ip = $this->reg_ip();
+	if($this->add_chack()){
+
+    $result = $this->pdo->prepare("INSERT INTO `users` (`id`, `login`, `email`, `password`, `token`, `time_at`, `ip`) VALUES(:id, :login, :email, :password, :token, :time_at, :ip )");
+    $x = $result->execute([':id'=>null,
+                      ':login'=>$this->post['login'],
+                      ':email'=>$this->post['password_2'],
+                      ':password'=>$this->post['password_2'],
+                      ':token'=>'70',
+                      ':time_at'=>$time,
+                      ':ip'=>$ip]);
+      if( $x ){
+    	$this->user_add = '1';
+    }else{
+    	$this->user_add = '0';
+    }
 }
-// $new = new User_add(['a'=>'a']);
-// $new->test();
+  
+
+}
+//узнать ip user
+public function reg_ip(){
+$client  = @$_SERVER['HTTP_CLIENT_IP'];
+$forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+$remote  = @$_SERVER['REMOTE_ADDR'];
+if(filter_var($client, FILTER_VALIDATE_IP)) $ip = $client;
+elseif(filter_var($forward, FILTER_VALIDATE_IP)) $ip = $forward;
+else $ip = $remote;
+return $ip;
+}
+//время регистрации
+public function time_add(){
+time() + (7 * 24 * 60 * 60);
+$time_add = date('l jS \of F Y h:i:s A');
+return $time_add;
+}
+}
+
+
+
 ?>
