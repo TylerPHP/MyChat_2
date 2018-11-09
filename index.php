@@ -24,11 +24,8 @@
       </div>
 <div class="checkbox mb-3">
     <input type="checkbox" value="remember-me"> Remember me
-      </div>
-        
-        
+      </div> 
     </div>
-
   </form>
 </div>
 

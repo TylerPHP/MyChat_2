@@ -1,6 +1,6 @@
 <?php  require_once('header.php');?>
 
-<div class="text-center p-4 border border-white bg-secondary">
+<div class="text-center p-4 border border-white bg-secondary all_reg">
   <h1 class="h4 mb-4 reg_loader">Регистрация</h1>
   <div class="text-danger login_error"></div>
   <form class="form-signin" role="form" method="POST" action="App/controller/Register.php">
@@ -17,6 +17,12 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+function remove(){
+login.html('');
+email.html('');
+pass.html('');
+pass_2.html('');
+  }
 $('button[name=click]').on('click', function(){
    return false;
 }).on('click', function(){ 
@@ -27,20 +33,24 @@ var pass_2 = $(".password_error_2");
 var form = $(".form-signin").serialize();
 //отправка данных на сервер
 $.post("App/controller/Register.php",form, function( data ){
-  if(data.user == "ok")
-    $("img").hide();
+  if(data.user == "ok"){
+    var nike = $("[name=login]").val();
+    alert("вы успешно зарегестрировали аккаунт под ником:"+' '+nike +' '+'теперь вам следует авторизоваться для входа в чат!');
+    $("form").hide();
+    remove();
+    $("h1").replaceWith("<div class='link_auto'>Для того что бы авторизоваться перейдите по ссылке ----><a href='index.php'>Войти в чат</a></div>");
+  }else{
 login.html(data.login);
 email.html(data.email);
 pass.html(data.password);
 pass_2.html(data.password_2);
+}
 },"json").done(function() {
 $(".reg_loader").addClass("loader_add");
 }).fail(function() {
 //выводит ошибку если форма не отправлена
+remove();
 login.html("error! отправка не удалась");
-email.html('');
-pass.html('');
-pass_2.html('');
 }) .always(function() { 
  $(".reg_loader").removeClass("loader_add");
 });

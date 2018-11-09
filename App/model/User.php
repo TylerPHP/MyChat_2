@@ -28,6 +28,7 @@ $result->execute([':login' => $login]);
 $error[] = $result->fetchColumn() ? '7' : false;
 $error_result = $this->method($error);
 $this->login = $error_result;
+return $error_result;
 }
 public function email(){
 $email = $this->post['email'];
@@ -82,42 +83,34 @@ protected function PDO_connect(){
   // );
 	$pdo = new \PDO($dsn, $user, $pass);
 	$this->pdo = $pdo;	
-}
-}
-//класс добовления зарегестрированного пользователя
+}}
+//дочерний класс добовления зарегестрированного пользователя
 class User extends User_check{
 	public $add_chack;
 	public $time;
 	public $user_add;
-    public function __construct(array $post){
+public function __construct(array $post){
 	$this->PDO_connect();
 	$this->post = $post;
 	$this->login();
 	$this->email();
 	$this->password();	
 	$this->password_2();
+	if($this->add_chack()){
 	$this->add_user();
 }
-//проверяет правильно ли пользователь заполнил форму
-public function add_chack(){
-    if(!$this->login and !$this->email and !$this->password and !$this->password_2){
-           return true;
-       }else{
-       	   return false;
-       }
 }
 //добовляет пользователя в базу
 public function add_user(){
 	$time = $this->time_add();
 	$ip = $this->reg_ip();
-	if($this->add_chack()){
-
+	
     $result = $this->pdo->prepare("INSERT INTO `users` (`id`, `login`, `email`, `password`, `token`, `time_at`, `ip`) VALUES(:id, :login, :email, :password, :token, :time_at, :ip )");
     $x = $result->execute([':id'=>null,
                       ':login'=>$this->post['login'],
-                      ':email'=>$this->post['password_2'],
-                      ':password'=>$this->post['password_2'],
-                      ':token'=>'70',
+                      ':email'=>$this->post['email'],
+                      ':password'=>password_hash($this->post['password'], PASSWORD_DEFAULT),
+                      ':token'=>'0',
                       ':time_at'=>$time,
                       ':ip'=>$ip]);
       if( $x ){
@@ -126,8 +119,13 @@ public function add_user(){
     	$this->user_add = '0';
     }
 }
-  
-
+//проверяет правильно ли пользователь заполнил форму
+public function add_chack(){
+    if(!$this->login and !$this->email and !$this->password and !$this->password_2){
+           return true;
+       }else{
+       	   return false;
+       }
 }
 //узнать ip user
 public function reg_ip(){
@@ -142,11 +140,8 @@ return $ip;
 //время регистрации
 public function time_add(){
 time() + (7 * 24 * 60 * 60);
-$time_add = date('l jS \of F Y h:i:s A');
+$time_add = date('Y-m-d H:i:s');
 return $time_add;
 }
 }
-
-
-
 ?>

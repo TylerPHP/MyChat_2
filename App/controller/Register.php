@@ -1,5 +1,5 @@
 <?php 
-namespace controller;
+namespace Controller;
 use model\User;
 //автоматическая загрузка классов
 spl_autoload_register(function($class) {   
@@ -49,48 +49,4 @@ if($ajax) echo $ajax;
  }
 }}
 $form = new Form;
-
-
-
-
-// /*----------*/
-// /*-----time in base-----*/
-
-// /*--------------------*/
-// /*----add in base------*/
-// $result = mysqli_query($connect, "SELECT * FROM `users`");
-
-
-// $test= '0';
-//     if(count($resultEnter) == '4'){
-//   while($user = mysqli_fetch_assoc($result))
-//   {
-//     if($data['Login'] !== $user['login'] or  $data['email'] !== $user['email']){
-
-//     $test = '1';
-
-//     }else{
-    
-//       $userError = '<div class="alert alert-danger" role="alert">
-//       <strong>error!</strong>such mail or login is already registered---1---</div>';
-//   }}}
-
-//     if($test == '1'){
-//            $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-
-//       $resulte = mysqli_query($connect, "INSERT INTO `users` (`id`, `login`, `email`, `password`, `dataTime`, `nikname`, `age`, `gender`, `icon`, `ip`) VALUES(NULL, '".$data['Login']."', '".$data['email']."', '".$data['password']."', '".$dataTime."','', '0', '','', '".$ip."')");
-
-//       // header('Location:index.php');
-
-//       if( $resulte == false)
-//       {
-//        echo mysqli_connect_error();
-//         $userError = '<div class="alert alert-danger" role="alert">
-//         <strong>error!</strong>such mail or login is already registered---2---</div>';
-//       }
-//     }/* else{
-//        $userError = '<div class="alert alert-danger" role="alert">
-//         <strong>error!</strong>error!! was not added to the database---3---</div>';
-//     }*/
-    
-    ?>
+?>

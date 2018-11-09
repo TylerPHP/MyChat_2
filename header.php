@@ -11,7 +11,7 @@
 <script>window.jQuery || document.write('<script src="JS/jquery-3.3.1.js"><\/script>')</script>
 </head>
 <body>
-   <noscript><span>------На этом сайте используется Javascript , Включите его опожалуйсто!!!!!-------</span></noscript>
+   <noscript><span>------На этом сайте используется Javascript , Включите его пожалуйсто!!!!!-------</span></noscript>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a href="#" class="navbar-brand">
      <img src="CSS/images/chat.jpg" width="150" height="150" alt="logo">

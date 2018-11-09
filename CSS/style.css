@@ -50,8 +50,7 @@
 }
 @media (max-width: 440px) {
 	.settings{
-		margin-top: 70px;
-		
+		margin-top: 70px;	
 	}
 	body	.ImgUserMess{
 		max-width: 70px;
@@ -77,8 +76,6 @@
 		font-size: 8px;
 	}
 }
-
-
 body{
 	background:#EA4335;
 }
@@ -88,8 +85,10 @@ input{
 body a:active,body a:visited ,body a:hover,body a {
 	color: yellow;
 }
-
-
+/* --------меню------- */
+nav{
+  height: 28vh;
+}
 /* chat */
 .coloRewin{
 	background:#EA4335;
@@ -113,7 +112,6 @@ body .noneclick {
 	min-height: 1500px;
 	color:black;
 }
-
 fieldset{
 	position: fixed;
 	left: 70%;
@@ -173,7 +171,7 @@ body .TextUserMass{
 	width: 90%;
 	word-break: break-all;
 }
-
 body .settings{
 	z-index: 10;
 }
+
