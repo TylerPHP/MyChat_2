@@ -2,20 +2,25 @@
 namespace Controller;
 use model\User;
 //автоматическая загрузка классов
-spl_autoload_register(function($class) {   
+spl_autoload_register(function($class) {  
+if($class == 'PDO_connect'){
+ require_once('../model/'.str_replace('\\', '/', $class).'.php');
+}else{
  require_once('../'.str_replace('\\', '/', $class).'.php'); 
+}
 });
 //класс формирования ошибок
 class Form{
 protected $post = array();
-protected $error = array();
+public $error = array();
 protected $user;//объект модели
 public function __construct(){
-	if($_SERVER['REQUEST_METHOD'] == 'POST'){
-$this->post = $_POST;
-$this->user = new User($this->post);
-$this->send();
-}}
+		if($_SERVER['REQUEST_METHOD'] == 'POST'){
+		$this->post = $_POST;
+		$this->user = new User($this->post);
+		$this->send();
+}
+}
 public function errors($number){
 $er = '<strong>ошибка !</strong>';
 $errors = [
@@ -40,6 +45,7 @@ $form_err = [
 "password"=>$this->errors($user->password), 
 "password_2"=>$this->errors($user->password_2)
 ];
+$this->error = $form_err;
 //отправка массива ошибок
 if($user->user_add == '1'){
 echo json_encode(array('user' => 'ok'));
@@ -48,5 +54,12 @@ $ajax = json_encode($form_err);
 if($ajax) echo $ajax;
  }
 }}
-$form = new Form;
+$form_err = [
+"login"=>'', 
+"email"=>'',
+"password"=>'', 
+"password_2"=>''
+];
+$form = new Form($form_err);
+// var_dump($form->error);
 ?>

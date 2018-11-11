@@ -1,18 +1,25 @@
 <?php
-namespace Model;		
-//класс проверки формы 
+namespace model;
+//автоматическая загрузка классов
+spl_autoload_register(function($class) {   
+ require_once(str_replace('\\', '/', $class).'.php'); 
+});
 class User_check{
 	public $login;
 	public $email;
 	public $password;
 	public $password_2;
-	protected $pdo;
+	public $pdo;
 	public $error = array();
-	public $post = array();
-	// public function __construct(array $post){
-	// $this->PDO_connect();
-	// $this->post = $post;
-	// }
+	protected $post = array();
+	public function __construct(array $post){
+	$this->pdo = \PDO_connect::connect();
+	$this->post = $post;
+	$this->login();
+	$this->email();
+	$this->password();	
+	$this->password_2();
+	}
 public function login(){
 $login = $this->post['login'];
 $login = $login ?? false;
@@ -71,54 +78,20 @@ public function method($error){
       		return $er;
       		break;
       	}}}
-protected function PDO_connect(){
-	$host = 'localhost';
-	$database = 'ChatTwo';
-	$user = 'root';
-	$pass = '';
-	$dsn = "mysql:host=$host;dbname=$database;";
-  // $options = array(
-  //     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-  //     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-  // );
-	$pdo = new \PDO($dsn, $user, $pass);
-	$this->pdo = $pdo;	
-}}
+ function __destruct() {
+       
+   }
+}
 //дочерний класс добовления зарегестрированного пользователя
 class User extends User_check{
 	public $add_chack;
 	public $time;
 	public $user_add;
-public function __construct(array $post){
-	$this->PDO_connect();
-	$this->post = $post;
-	$this->login();
-	$this->email();
-	$this->password();	
-	$this->password_2();
+    public function __construct(array $post){
+	parent::__construct($post);
 	if($this->add_chack()){
 	$this->add_user();
-}
-}
-//добовляет пользователя в базу
-public function add_user(){
-	$time = $this->time_add();
-	$ip = $this->reg_ip();
-	
-    $result = $this->pdo->prepare("INSERT INTO `users` (`id`, `login`, `email`, `password`, `token`, `time_at`, `ip`) VALUES(:id, :login, :email, :password, :token, :time_at, :ip )");
-    $x = $result->execute([':id'=>null,
-                      ':login'=>$this->post['login'],
-                      ':email'=>$this->post['email'],
-                      ':password'=>password_hash($this->post['password'], PASSWORD_DEFAULT),
-                      ':token'=>'0',
-                      ':time_at'=>$time,
-                      ':ip'=>$ip]);
-      if( $x ){
-    	$this->user_add = '1';
-    }else{
-    	$this->user_add = '0';
-    }
-}
+}}
 //проверяет правильно ли пользователь заполнил форму
 public function add_chack(){
     if(!$this->login and !$this->email and !$this->password and !$this->password_2){
@@ -126,6 +99,24 @@ public function add_chack(){
        }else{
        	   return false;
        }
+}
+//добовляет пользователя в базу
+public function add_user(){
+	$time = $this->time_add();
+	$ip = $this->reg_ip();
+    $result = $this->pdo->prepare("INSERT INTO `users` (`id`, `login`, `email`, `password`, `token`, `time_at`, `ip`) VALUES(:id, :login, :email, :password, :token, :time_at, :ip )");
+    $x = $result->execute([':id'=>null,
+                           ':login'=>$this->post['login'],
+                           ':email'=>$this->post['email'],
+                           ':password'=>password_hash($this->post['password'], PASSWORD_DEFAULT),
+	                       ':token'=>'0',
+	                       ':time_at'=>$time,
+	                       ':ip'=>$ip]);
+      if( $x ){
+    	$this->user_add = '1';
+    }else{
+    	$this->user_add = '0';
+    }
 }
 //узнать ip user
 public function reg_ip(){
@@ -143,5 +134,17 @@ time() + (7 * 24 * 60 * 60);
 $time_add = date('Y-m-d H:i:s');
 return $time_add;
 }
+ function __destruct() {
+      parent::__destruct();
+   }
 }
+//---test--class
+// $form_err = [
+// "login"=>'', 
+// "email"=>'',
+// "password"=>'', 
+// "password_2"=>''
+// ];
+// $a = new User($form_err);
+// var_dump($a->login);
 ?>

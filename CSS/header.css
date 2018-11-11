@@ -1,0 +1,8 @@
+/* --------меню------- */
+nav{
+  overflow:hidden;
+}
+nav img{
+	width: 50%;
+	height: 50%;
+}

@@ -9,13 +9,11 @@
     <div class="form-row">
       <div class="form-group col-md-3">
         <label for="inputEmail4">Почта или логин:</label>
-        <input type="emailorlogin" name="login" class="form-control loginUp" id="inputEmail4" placeholder="почта или логин">
-        <div class="text"></div>
+        <input type="text" name="login" class="form-control" placeholder="Введите логин" value="<?=$_POST['login'] ?? '';?>" required autofocus">
       </div>
       <div class="form-group col-md-3">
         <label for="inputPassword4">Пароль</label>
-        <input type="password" name="password" class="form-control" id="inputPassword4" placeholder="**********">
-        <div class="d-flex flex-row-reverse my-4">
+         <input type="password" name="password" class="form-control" placeholder="Введите пароль" value="<?=$_POST['password'] ?? '';?>" required>
           <button type="submit" name="ok"  class="btn btn-primary">Вход</button>
           <div class="btn btn-outline-danger col-md-offset-4 DeleteWrite">
             <a href="#">Удалить написанное</a>
