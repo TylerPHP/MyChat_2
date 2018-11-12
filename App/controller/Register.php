@@ -1,5 +1,5 @@
 <?php 
-namespace Controller;
+namespace controller;
 use model\User;
 //автоматическая загрузка классов
 spl_autoload_register(function($class) {  

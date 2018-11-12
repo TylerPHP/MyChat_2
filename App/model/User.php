@@ -78,9 +78,6 @@ public function method($error){
       		return $er;
       		break;
       	}}}
- function __destruct() {
-       
-   }
 }
 //дочерний класс добовления зарегестрированного пользователя
 class User extends User_check{
@@ -134,9 +131,6 @@ time() + (7 * 24 * 60 * 60);
 $time_add = date('Y-m-d H:i:s');
 return $time_add;
 }
- function __destruct() {
-      parent::__destruct();
-   }
 }
 //---test--class
 // $form_err = [
