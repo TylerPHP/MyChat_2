@@ -1,5 +1,8 @@
 <?php
-class PDO_connect{
+namespace model;
+use PDO;
+//класс подключения к базе данных
+class PDOconnect{
 	protected $pdo;
 	public static function connect(){
 	$host = 'localhost';

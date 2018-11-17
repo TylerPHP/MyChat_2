@@ -1,0 +1,19 @@
+{
+    "name": "alex/mychat_2",
+    "description": "lessons",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alex",
+            "email": "932911@mail.ru"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload": {
+       "psr-4": {
+        "model": ""
+       }
+    }
+}

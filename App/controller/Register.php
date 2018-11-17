@@ -3,11 +3,7 @@ namespace controller;
 use model\User;
 //автоматическая загрузка классов
 spl_autoload_register(function($class) {  
-if($class == 'PDO_connect'){
- require_once('../model/'.str_replace('\\', '/', $class).'.php');
-}else{
  require_once('../'.str_replace('\\', '/', $class).'.php'); 
-}
 });
 //класс формирования ошибок
 class Form{
@@ -54,12 +50,13 @@ $ajax = json_encode($form_err);
 if($ajax) echo $ajax;
  }
 }}
-$form_err = [
-"login"=>'', 
-"email"=>'',
-"password"=>'', 
-"password_2"=>''
-];
-$form = new Form($form_err);
+$form = new Form;
+// $form_err = [
+// "login"=>'', 
+// "email"=>'',
+// "password"=>'', 
+// "password_2"=>''
+// ];
+// $form = new Form($form_err);
 // var_dump($form->error);
 ?>

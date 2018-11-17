@@ -1,4 +1,3 @@
-<?php require_once('App/model/User.php'); ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -17,8 +16,8 @@
      <img src="CSS/images/chat.jpg" width="150" height="150" alt="logo">
    </a>
    <div class="col-md-auto">
-    <a href="index.php" class="col">Войти в чат</a>
-    <a href="register.php" class="col">Регистрация</a>
-    <a href="info.php" class="col-6">Информация</a></div>
+    <a href="index.php" class="col link">Войти в чат</a>
+    <a href="register.php" class="col link">Регистрация</a>
+    <a href="info.php" class="col-6 link">Информация</a></div>
     <div class="WaitImg"></div>
   </nav>

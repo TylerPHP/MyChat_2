@@ -9,14 +9,24 @@ if($class == 'PDO_connect'){
 });
 
 class Authoriz{
+ public $autoriz; // объект модели
  public $post = array();
  public $error = array();
  public function __construct(){
       if($_SERVER['REQUEST_METHOD'] == 'POST'){
-		$this->pdo = \PDO_connect::connect();
 	    $this->post = $_POST;
-	    $this->user = new User($this->post);
+	    $this->user = new Autarization($this->post);
 	    $this->send();
 }
-}}
+}
+public function send($number){
+$er = '<strong>ошибка !</strong>';
+$errors = [
+"$er введите ваши данные",
+"$er данный логин не найден",
+"$er данная почта не найдена",
+"$er данные введены не верно"
+];
+}
+}
 ?>

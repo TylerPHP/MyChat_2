@@ -1,5 +1,9 @@
 $(document).ready (function (){
 	/*-----index.php-----*/
+	$('.link').click(function() {
+   $('.link').css('border-bottom', 'none');
+   $(this).css('border-bottom', '2px solid yellow');
+});
 	$(".DeleteWrite").bind("click", function(){
 		if($( this )){
 			$("input[name='login'], input[name='password']").val('');
@@ -146,6 +150,7 @@ $(window).keyup(function(event) {
 					}else{counter = 0;}
 				}, 2000);
  //проверка аватарки
+
  $('img[src=""]').attr('src', 'CSS/images/user.png');
  if($('.massegeUser').length > '5')
  	$(window).scrollTop($(document).height());
