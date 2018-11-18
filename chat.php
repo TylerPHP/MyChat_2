@@ -1,7 +1,8 @@
-<!-- <?php 
+ <!-- прошлая версия -->
+ <?php 
 include_once'server/log.php';
 include 'server/Chat.php';
-?> -->
+?>
 <!doctype html>
 <html lang="en-ru">
 <head>

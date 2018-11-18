@@ -28,4 +28,3 @@ input.html("<strong>error! </strong> отправка не удалась");
  $(".reg_loader").removeClass("loader_add");
 });
 });
-});

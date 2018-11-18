@@ -1,8 +1,9 @@
 $(document).ready (function (){
+	//----------прошлая версия
 	/*-----index.php-----*/
-	$('.link').click(function() {
-   $('.link').css('border-bottom', 'none');
-   $(this).css('border-bottom', '2px solid yellow');
+	// $('.link').click(function() {
+ //   $('.link').css('border-bottom', 'none');
+ //   $(this).css('border-bottom', '2px solid yellow');
 });
 	$(".DeleteWrite").bind("click", function(){
 		if($( this )){
